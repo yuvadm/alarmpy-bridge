@@ -33,7 +33,6 @@ class AlarmpyBridge():
     
     def fetch(self):
         res = self.sess.get(self.URL).content
-        print(f"Got {res}")
         if res != self.last:
             self.last = res
             self.update()
