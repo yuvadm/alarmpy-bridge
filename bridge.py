@@ -13,7 +13,8 @@ class AlarmpyBridge():
     }
 
     def __init__(self):
-        self.sess = requests.Session(headers=self.HEADERS)
+        self.sess = requests.Session()
+        self.sess.headers.update(self.HEADERS)
         self.last = None
 
     def loop(self):
