@@ -1,6 +1,7 @@
 import requests
-# import boto
+import boto3
 
+from os import environ
 from time import sleep
 
 class AlarmpyBridge():
@@ -16,6 +17,8 @@ class AlarmpyBridge():
         self.sess = requests.Session()
         self.sess.headers.update(self.HEADERS)
         self.last = None
+        self.s3 = boto3.client("s3")
+        self.bucket_name = environ.get("S3_BUCKET_NAME")
 
     def loop(self):
         print("Starting Alarmpy Bridge loop...")
@@ -37,6 +40,14 @@ class AlarmpyBridge():
     
     def update(self, res):
         print(f"Updating {res}")
+        self.s3.put_object(
+            Bucket=self.bucket_name,
+            Body=res,
+            Key="alerts.json",
+            ACL="public-read",
+            CacheControl="max-age=1, public, stale-while-revalidate=3",
+            StorageClass='STANDARD',
+        )
 
 if __name__== "__main__":
     ab = AlarmpyBridge()
