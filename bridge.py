@@ -1,7 +1,7 @@
 import requests
 # import boto
 
-from thread import sleep
+from time import sleep
 
 class AlarmpyBridge():
     URL = "https://www.oref.org.il/WarningMessages/alert/alerts.json"
