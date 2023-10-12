@@ -35,16 +35,17 @@ class AlarmpyBridge():
         res = self.sess.get(self.URL).content
         print(f"Got {res}")
         if res != self.last:
-            self.update(res)
-        self.last = res
+            self.last = res
+            self.update()
+        
     
-    def update(self, res):
+    def update(self):
+        res = self.last
         print(f"Updating {res}")
         self.s3.put_object(
             Bucket=self.bucket_name,
             Body=res,
             Key="alerts.json",
-            ACL="public-read",
             CacheControl="max-age=1, public, stale-while-revalidate=3",
             StorageClass='STANDARD',
         )
