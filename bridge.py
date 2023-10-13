@@ -45,7 +45,7 @@ class AlarmpyBridge():
             Bucket=self.bucket_name,
             Body=res,
             Key="alerts.json",
-            CacheControl="max-age=1, public, stale-while-revalidate=3",
+            CacheControl="max-age=1, public",
             StorageClass='STANDARD',
         )
 
