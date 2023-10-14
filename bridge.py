@@ -1,6 +1,7 @@
 import requests
 import boto3
 
+from datetime import datetime
 from os import environ
 from time import sleep
 
@@ -21,7 +22,8 @@ class AlarmpyBridge():
         self.bucket_name = environ.get("S3_BUCKET_NAME")
 
     def loop(self):
-        print("Starting Alarmpy Bridge loop...")
+        ts = datetime.now().isoformat()
+        print(f"{ts} Starting Alarmpy Bridge loop...")
         while True:
             try:
                 self.fetch()
@@ -40,7 +42,8 @@ class AlarmpyBridge():
     
     def update(self):
         res = self.last
-        print(f"Updating {res}")
+        ts = datetime.now().isoformat()
+        print(f"{ts} Updating {res}")
         self.s3.put_object(
             Bucket=self.bucket_name,
             Body=res,
